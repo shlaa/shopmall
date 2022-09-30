@@ -15,7 +15,11 @@
     <h1>1</h1>
     <h1>1</h1>
     <h1>1</h1>
-    <h1>1</h1><h1>1</h1><h1>1</h1><h1>1</h1><h1>1</h1>
+    <h1>1</h1>
+    <h1>1</h1>
+    <h1>1</h1>
+    <h1>1</h1>
+    <h1>1</h1>
   </div>
 </template>
 
@@ -26,7 +30,7 @@
   import FeatureView from "@/views/home/childcomps/FeatureView";
   import TabCotrol from "@/components/content/tabCotrol/TabCotrol";
 
-  import {getHomeMultidata} from "@/network/home";
+  import {getHomeMultidata, getHomeData} from "@/network/home";
 
   export default {
     name: "Home",
@@ -40,22 +44,44 @@
     data() {
       return {
         banners: [],
-        recommends: []
+        recommends: [],
+        goods: {
+          'pop': {page: 0, list: []},
+          'new': {page: 0, list: []},
+          'sell': {page: 0, list: []}
+        }
       }
     },
     created() {
-      getHomeMultidata().then(res => {
-        this.banners = res.data.banner.list;
-        this.recommends = res.data.recommend.list;
-      })
+      this.getHomeMultidata();
+      //  请求商品数据
+      this.getHomeData('pop');
+      this.getHomeData('new');
+      this.getHomeData('sell');
+    },
+    methods: {
+      getHomeMultidata() {
+        getHomeMultidata().then(res => {
+          this.banners = res.data.banner.list;
+          this.recommends = res.data.recommend.list;
+        })
+      },
+      getHomeData(type) {
+        const page = this.goods[type].page + 1
+        getHomeData(type, page).then(res => {
+          this.goods[type].list.push(...res.data.list)
+          this.goods[type].page += 1
+        })
+      }
     }
   }
 </script>
 
 <style>
-  #home{
+  #home {
     padding-top: 44px;
   }
+
   .home-navbar {
     background-color: var(--color-tint);
     color: #ffffff;
@@ -66,7 +92,8 @@
     top: 0;
     z-index: 100;
   }
-  .tab-cotrol{
+
+  .tab-cotrol {
     position: sticky;
     top: 44px;
   }
