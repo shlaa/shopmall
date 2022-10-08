@@ -1,5 +1,6 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
+    <!--    <img :src="goodsItem.show.img" @load="imgeLoad">-->
     <img :src="goodsItem.show.img">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -10,6 +11,8 @@
 </template>
 
 <script>
+  import {provide} from 'vue'
+
   export default {
     name: "goodsListItem",
     props: {
@@ -18,6 +21,18 @@
         default() {
           return {}
         }
+      }
+    },
+    setup() {
+      provide('itemImageLoad')
+    },
+    methods: {
+      // imgeLoad() {
+      //   provide('itemImageLoad')
+      //   // this.$emit('itemImageLoad')
+      // }
+      itemClick() {
+        this.$router.push('/detail/' + this.goodsItem.iid)
       }
     }
   }
@@ -28,7 +43,6 @@
     padding-bottom: 40px;
     position: relative;
     width: 48%;
-
   }
 
   .goods-item img {
