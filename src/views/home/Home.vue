@@ -9,8 +9,9 @@
     </nav-bar>
     <tab-cotrol :titles="['流行','新款','精选']"
                 @tabClick="tabClick"
-                ref="tabCotrol"
-                class="tab-cotrol" v-show="istabFixed"></tab-cotrol>
+                ref="topTabControl"
+                class="tab-cotrol"
+                v-show="istabFixed"></tab-cotrol>
     <scroll class="content"
             ref="scroll"
             :probe-type="3"
@@ -139,6 +140,11 @@
             this.currentType = 'sell'
             break
         }
+        if (this.$refs.topTabControl !== undefined || this.$refs.tabCotrol != undefined) {
+          this.$refs.topTabControl.currentIndex = index
+          this.$refs.tabCotrol.currentIndex = index
+        }
+
       },
       BackClick() {
         this.$refs.scroll.scrollTo(0, 0)

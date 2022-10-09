@@ -31,12 +31,13 @@
         currentIndex: 0
       }
     },
-    methods:{
-      titlesItem(index){
-        this.currentIndex=index;
-
+    methods: {
+      titlesItem(index) {
+        this.currentIndex = index;
+        // console.log(index);
+        this.$emit('titleClick',index);
       },
-      backClick(){
+      backClick() {
         this.$router.back()
       }
     }
@@ -55,7 +56,8 @@
   .active {
     color: var(--color-high-text);
   }
-  .back img{
+
+  .back img {
     margin-top: 10px;
   }
 </style>
