@@ -3,7 +3,7 @@
     <div class="item-selector">
       <check-button :isChecked="product.checked"
                     @click="checkClick"
-                    v-model="product.checked"></check-button>
+                    ></check-button>
     </div>
     <div class="item-img">
       <img :src="product.image" alt="商品图片">

@@ -37,8 +37,8 @@
   .icon-selector {
     position: relative;
     margin: 0;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     border: 2px solid #ccc;
     cursor: pointer;

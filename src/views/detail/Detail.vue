@@ -7,7 +7,6 @@
             :probe-type="3"
             :pull-up-load="true"
             @scroll="detailScroll">
-      {{product}}
       <detail-swiper :top-images="topImages"></detail-swiper>
       <detail-base-info :goods="goods"></detail-base-info>
       <detail-shop-info :shop="shop"></detail-shop-info>
@@ -18,6 +17,8 @@
     </scroll>
     <back-top @click="BackClick" v-show="isShowBackClick"></back-top>
     <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
+    <toast :message="message" :show="show"></toast>
+    <!--    <toast></toast>-->
   </div>
 </template>
 
@@ -35,6 +36,8 @@
   import Scroll from "@/components/common/scroll/Scroll";
   import goodsList from "@/components/content/goods/goodsList";
   import BackTop from "@/components/content/backTop/BackTop";
+  import {mapActions} from 'vuex'
+  import Toast from "@/components/common/toast/Toast";
 
   export default {
     name: "Detail",
@@ -49,7 +52,8 @@
       DetailCommentInfo,
       goodsList,
       DetailBottomBar,
-      BackTop
+      BackTop,
+      Toast
     },
     data() {
       return {
@@ -63,7 +67,9 @@
         recommend: [],
         themeTopY: [],
         currentIndex: 0,
-        isShowBackClick: false
+        isShowBackClick: false,
+        message: '',
+        show: false
       }
     },
     created() {
@@ -104,6 +110,7 @@
 
     },
     methods: {
+      ...mapActions(['addCart']),
       imageLoad() {
         this.$refs.scroll.refresh()
 
@@ -137,18 +144,30 @@
       BackClick() {
         this.$refs.scroll.scrollTo(0, 0)
       },
-      addToCart(){
-      //  获取购物车需要展示的信息
-        const product={}
-        product.image=this.topImages[0];
-        product.title=this.goods.title;
-        product.desc=this.goods.desc;
-        product.newPrice=this.goods.realPrice;
-        product.iid=this.iid
+      addToCart() {
+        //  获取购物车需要展示的信息
+        const product = {}
+        product.image = this.topImages[0];
+        product.title = this.goods.title;
+        product.desc = this.goods.desc;
+        product.newPrice = this.goods.realPrice;
+        product.iid = this.iid
 
-        // this.$store.craList.push(product)
-        // this.$store.comit('addCart',product)
-        this.$store.dispatch('addCart',product)
+        this.addCart(product).then(res => {
+          //普通封装
+          this.show = true;
+          this.message = res;
+          setTimeout(() => {
+            this.show = false;
+            this.message = ''
+          }, 1500)
+        })
+        // this.$store.dispatch('addCart',product).then(res=>{
+        //   console.log(res)
+        // })
+
+        //  添加到购物车成功
+
       }
     }
   }
