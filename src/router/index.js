@@ -23,6 +23,10 @@ const routes = [
     path: '/cart',
     component: Cart
   },
+  // {
+  //   path: '/profile',
+  //   component: Profile
+  // },
   {
     path: '/profile',
     component: Profile

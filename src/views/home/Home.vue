@@ -4,7 +4,7 @@
     <!--      <div>-->
     <nav-bar class="home-navbar">
       <template v-slot:center>
-        <div>首页</div>
+        <div>购物商场</div>
       </template>
     </nav-bar>
     <tab-cotrol :titles="['流行','新款','精选']"

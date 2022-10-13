@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <!--    <img :src="goodsItem.show.img" @load="imgeLoad">-->
-        <img :src="showImage">
+    <img :src="goodsItem.img">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -14,7 +14,7 @@
   import {provide} from 'vue'
 
   export default {
-    name: "goodsListItem",
+    name: "goodsListItems",
     props: {
       goodsItem: {
         type: Object,
@@ -27,20 +27,10 @@
       provide('itemImageLoad')
     },
     methods: {
-      // imgeLoad() {
-      //   provide('itemImageLoad')
-      //   // this.$emit('itemImageLoad')
-      // }
       itemClick() {
         this.$router.push('/detail/' + this.goodsItem.iid)
       }
     },
-    computed: {
-      showImage() {
-        return this.goodsItem.image || this.goodsItem.show.img
-        // return this.goods.img || this.goods.image || this.goods.show.img
-      }
-    }
   }
 </script>
 
